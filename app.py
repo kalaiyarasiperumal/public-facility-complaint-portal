@@ -46,7 +46,7 @@ complaints = [
 # Home page
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("admin.html")
 
 
 # Admin dashboard
