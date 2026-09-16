@@ -1,0 +1,55 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#photoPreview {
+    margin-top: 10px;
+    border: 2px solid darkblue;
+    border-radius: 10px;
+}
+.main-image {
+    display: block;
+    width: 90%;
+    max-width: 600px;
+    height: 250px;
+    object-fit: cover;
+    margin: 20px auto;
+    border: 3px solid darkblue;
+    border-radius: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
