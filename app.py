@@ -50,7 +50,7 @@ def home():
 
 
     
-    @app.route("/facility")
+@app.route("/facility")
 def facility():
     return render_template("facility.html")
 
