@@ -47,6 +47,9 @@ complaints = [
 @app.route("/")
 def home():
     return render_template("index.html")
+
+
+    
     @app.route("/facility")
 def facility():
     return render_template("facility.html")
