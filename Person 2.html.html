@@ -1,0 +1,213 @@
+<!DOCTYPE html>  <html>    <head>    
+    <title>Public Facility Complaint Portal</title>  <style>    
+    body {    
+        border: 5px solid darkblue;    
+        font-family: Arial;    
+        background-color: lightblue;    
+        padding: 20px;    
+    }    h1 {
+
+color: darkblue;
+font-size: 32px;
+text-align: center;
+
+}
+
+form {
+background-color: white;
+padding: 20px;
+width: 300px;
+border: 2px solid darkblue;
+border-radius: 20px;
+margin: 20px auto;
+
+}
+input, select, textarea, button {
+margin-top: 5px;
+padding: 8px;
+width: 100%;
+box-sizing: border-box;
+}
+button:hover {
+background-color: rgb(0, 128, 21);
+color: white;
+cursor: pointer;
+}
+button {
+background-color: darkblue;
+color: white;
+border: none;
+}.status {
+background-color: white;
+padding: 15px;
+margin-top: 20px;
+border: 2px solid darkblue;
+border-radius: 15px;
+text-align: center;
+}
+h2 {
+color: darkblue;
+text-align: center;
+background-color: lightyellow;
+padding: 10px;
+border-radius: 10px;
+}
+footer {
+background-color: darkblue;
+color: white;
+text-align: center;
+padding: 10px;
+margin-top: 20px;
+border-radius: 10px;
+}table {
+background-color: white;
+border-collapse: collapse;
+margin: 20px auto;
+text-align: center;
+width: 90%;
+
+}
+
+th {
+background-color: darkblue;
+color: white;
+padding: 10px;
+}
+
+td {
+padding: 10px;
+}
+tr:hover {
+background-color: lightblue;
+}.about {
+background-color: white;
+padding: 20px;
+margin: 20px auto;
+width: 90%;
+border: 2px solid darkblue;
+border-radius: 15px;
+text-align: center;
+}
+</style>
+
+</head>  <body>    
+<h1>🏙️ Public Facility Complaint Portal</h1>    
+<h2>Welcome,<span id="userName"></span></h2>    
+<img src="facility.png" alt="Public Facility" class="main-image">    
+    <h2>Submit a Complaint 📝</h2>    
+<h2>Submitted Complaints</h2>  <table border="1" width="100%">    
+    <tr>    
+        <th>Complaint ID</th>    
+        <th>Complaint Type</th>    
+        <th>Status</th>    
+    </tr>    
+    <tr>    
+        <td>CF001</td>    
+        <td>Damaged Road</td>    
+        <td>Pending</td>    
+    </tr>    
+</table>    
+<div class="status">    
+<h2>Complaint Status</h2>    
+<p>Your complaint status will appear here.</p>    
+<p>Complaint ID: <strong id="complaintId">Not generated</strong></p>    
+<p>Status: <strong style="color: orange;">Pending</strong></p>    
+</div>    
+    <form onsubmit="submitComplaint(event)">    
+        <label>Your Name:</label>    
+        <br>    
+        <input type="text" id="complaintName" placeholder="Your registered name" readonly>  <label>Contact Number:</label>  
+<br>  
+<input type="tel" id="location" placeholder="Enter problem location">  
+<br><br>  
+<br><br>  <label>Complaint Type:</label>
+<br>
+<select id="facility">
+<option>Damaged Road</option>
+<option>Broken Streetlight</option>
+<option>Garbage Problem</option>
+<option>Water Supply Problem</option>
+</select><br><br>
+
+<label>Complaint Location:</label>
+<br>
+<input type="text" placeholder="Enter problem location">
+<br><br>
+<br><br>
+
+<label>Complaint Description:</label>
+<label>Upload Photo</label>
+
+<input type="file" accept="image/*">    
+        <br>    
+        <textarea rows="5" cols="30" required    
+    placeholder="Describe ycomplaint"></textarea>    
+        <br><br>    
+<button type="reset">    
+    Clear Form    
+</button>  <br><br>  <button type="submit">    
+    Submit Complaint    
+</button>    
+<button type="button"    
+onclick="window.location.href='http://127.0.0.1:5000/admin'">    
+Next    
+</button>  <p id="message" style="color: green; font-weight: bold;"></p>    
+<p id="photoName" style="color: blue; font-weight: bold;"></p>    
+ <img id="photoPreview" width="200" style="display: none;">           
+    </form>  <script>    
+    let user = JSON.parse(localStorage.getItem("user") || "null");  if (user) {
+document.getElementById("userName").innerText = user.name;
+document.getElementById("complaintName").value = user.name;
+}
+async function submitComplaint(event) {
+event.preventDefault();
+
+let user = JSON.parse(localStorage.getItem("user") || "null");
+
+if (!user) {
+document.getElementById("message").innerText =
+"Please register first.";
+return;
+}
+
+let facility = document.getElementById("facility").value;
+let location = document.getElementById("location").value;
+
+let response = await fetch("http://127.0.0.1:5000/add_complaint", {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify({
+name: user.name,
+facility: facility,
+location: location
+})
+});
+
+let result = await response.json();
+
+if (result.success) {
+document.getElementById("message").innerText =
+"Your complaint has been submitted successfully!";
+
+document.getElementById("complaintId").innerText =    
+    "CF" + result.id;
+
+}
+
+}
+
+</script>  <section class="about">    
+    <h2>About This Project</h2>    
+    <p>    
+        This project helps citizens submit complaints about public facilities    
+        such as roads, streetlights, garbage, and water supply.    
+    </p>    
+</section>    
+<footer>    
+    <p>© 2026 Public Facility Complaint Portal</p>    
+    <p>Developed by Team NEXORA</p>    
+</footer>    
+</body>    
+</html>  
